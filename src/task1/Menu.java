@@ -7,68 +7,109 @@ import java.io.InputStreamReader;
 public class Menu {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-
-    public Menu() {
-    }
-
     public void showPages() throws IOException {
         boolean exit = false;
-        while (!exit) {
-            showMenu();
+        Login login = new Login();
 
-            Login login = new Login();
+        while (!exit) {
+            showMainMenu();
+
             int menuInput = Integer.parseInt(reader.readLine());
-            if (menuInput == 1 && login.isUserLogged()) {
-                //action
-            } else if (menuInput == 2 && login.isUserLogged()) {
-                //action
-            } else if (menuInput == 3 && login.isUserLogged()) {
-                //action
-            } else if (menuInput == 4) {
-                System.out.println("Enter \"login\", \"register\", or \"exit\"");
-                String input = reader.readLine();
-                while (!exit) {
-                    if (input.equals("register")) {
-                        login.register();
-                        System.out.println("You are successfully registered");
-                        break;
+
+            switch (menuInput) {
+                case 1:
+                    if(login.isUserLogged()){
+                        System.out.println("case 1");
+                    }else{
+                        System.out.println("Login or register, please");
                     }
-                    else if (input.equals("login")) {
-                        if (login.login()){
-                            System.out.println("You are successfully logged");
-                        } else {
-                            System.out.println("Login or password is invalid. Try again please");
-                        }
-                        break;
+                    break;
+
+                case 2:
+                    if(login.isUserLogged()){
+                        System.out.println("case 2");
+                    }else{
+                        System.out.println("Login or register, please");
                     }
-                    else if(input.equals("exit")) {
-                        exit = true;
+                    break;
+
+                case 3:
+                    if(login.isUserLogged()){
+                        System.out.println("case 3");
+                    }else{
+                        System.out.println("Login or register, please");
                     }
-                    else {
-                        System.out.println("Invalid input. Try again, please.");
-                    }
-                }
-                //action
-            } else if (menuInput == 5) {
-                exit = true;
-            } else if (login.isUserLogged() == false) {
-                System.out.println("Log in or register, please");
-            } else {
-                System.out.println("Invalid number. Try again, please.");
+                    break;
+
+                case 4:
+                    loginChoice(login);
+                    break;
+
+                case 5:
+                    exit = true;
+                    break;
+
+                default:
+                    System.out.println("Invalid number. Try again, please.");
             }
         }
     }
-    
 
-    public void showMenu() {
+    public void loginChoice(Login login) throws IOException {
+        boolean back = false;
+        while (!back) {
+            showLoginMenu();
+            int loginInput = Integer.parseInt(reader.readLine());
+
+            switch (loginInput) {
+                case 1:
+                    if (login.login()) {
+                        login.setUserLogged(true);
+                        System.out.println("You are successfully logged");
+                        back = true;
+                    } else {
+                        System.out.println("Login or password is invalid. Try again please");
+                    }
+                    break;
+                case 2:
+                    login.register();
+                    login.setUserLogged(true);
+                    System.out.println("You are successfully registered");
+                    back = true;
+                    break;
+                case 3:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid number. Try again, please.");
+            }
+        }
+    }
+
+
+    public void showMainMenu() {
         System.out.println(
-                "Press the number:" + "\n"
-                        + "1 - Store" + "\n"
-                        + "2 - Basket" + "\n"
-                        + "3 - Profile" + "\n"
-                        + "4 - Login" + "\n"
-                        + "5 - Exit" + "\n"
+                "---------------" + "\n"
+                        + "Select an item:" + "\n"
+                        + "---------------" + "\n"
+                        + "|1| - Store   |" + "\n"
+                        + "|2| - Basket  |" + "\n"
+                        + "|3| - Profile |" + "\n"
+                        + "|4| - Login   |" + "\n"
+                        + "|5| - Exit    |" + "\n"
+                        + "---------------" + "\n"
+        );
+    }
 
+    public void showLoginMenu() {
+        System.out.println(
+                "---------------" + "\n"
+                        + "Select an item:" + "\n"
+                        + "----------------" + "\n"
+                        + "|1| - Login    |" + "\n"
+                        + "|2| - Register |" + "\n"
+                        + "|3| - Back     |" + "\n"
+                        + "----------------" + "\n"
         );
     }
 }

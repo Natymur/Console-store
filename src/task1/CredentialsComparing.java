@@ -1,25 +1,21 @@
 package task1;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class CredentialsComparing {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    File file = new File("credentials");
 
-    public boolean ensureIsCredsRight (String str) {
+    File file = new File("credentials");
+    Scanner scanner;
+
+    public boolean getAllCredentials (String str) {
         boolean result = false;
         try {
-            reader = new BufferedReader(new FileReader(file));
-            String line = reader.readLine();
+            FileReader fr= new FileReader(file);
+            scanner = new Scanner(fr);
+            result = compareCredentials(str);
+            fr.close();
 
-            while (line != null) {
-                if (str.equals(line)){
-                    Login login = new Login();
-                    login.setUserLogged(true);
-                    result = true;
-                    break;
-                }
-            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -29,11 +25,23 @@ public class CredentialsComparing {
         return result;
     }
 
+    public boolean compareCredentials(String str){
+        boolean result = false;
+        while (scanner.hasNextLine()) {
+            if (str.equals(scanner.nextLine())){
+                result = true;
+                break;
+        }
+    }
+        return result;
+    }
+
+
     public void saveCredentials(String creds) throws IOException {
         PrintWriter pw = new PrintWriter(new FileWriter(file, true));
         pw.println(creds);
         pw.close();
-
     }
+
 
 }

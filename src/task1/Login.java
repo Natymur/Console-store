@@ -4,6 +4,7 @@ import java.io.*;
 
 public class Login {
     private static boolean userLogged = false;
+    private String login, password;
 
     public void setUserLogged(boolean userLogged) {
         this.userLogged = userLogged;
@@ -14,12 +15,11 @@ public class Login {
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    private String login, password;
     public boolean login() throws IOException {
         enterCredentials();
         String str = login + ";" + password;
         CredentialsComparing comparing = new CredentialsComparing();
-        return comparing.ensureIsCredsRight(str);
+        return comparing.getAllCredentials(str);
     }
 
     public boolean register() throws IOException {
