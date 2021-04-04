@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 public class Menu {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+
     public void showPages() throws IOException {
         boolean exit = false;
         Login login = new Login();

@@ -1,10 +1,13 @@
 package task1;
 
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 public class Login {
     private static boolean userLogged = false;
-    private String login, password;
 
     public void setUserLogged(boolean userLogged) {
         this.userLogged = userLogged;
@@ -14,36 +17,60 @@ public class Login {
     }
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    CredentialsManager manager = new CredentialsManager();
 
     public boolean login() throws IOException {
-        enterCredentials();
-        String str = login + ";" + password;
-        CredentialsComparing comparing = new CredentialsComparing();
-        return comparing.getAllCredentials(str);
+
+        Credentials credentials = enterCredentials();
+        return credentials.compareTo(credentials);
     }
 
     public boolean register() throws IOException {
         User user = new User();
+        String name;
+        String lastName;
+        String email;
 
+        do{
         System.out.println("Enter your name, please");
-        user.setName(reader.readLine());
+        name = reader.readLine();
+        }
+        while (name.trim().isEmpty());
+        user.setName(name);
+
+        do{
         System.out.println("Enter your last name, please");
-        user.setLastName(reader.readLine());
+        lastName = reader.readLine(); }
+        while (lastName.trim().isEmpty());
+        user.setLastName(lastName);
+
+        do{
         System.out.println("Enter your email, please");
-        user.setEmail(reader.readLine());
+        email = reader.readLine();}
+        while (email.trim().isEmpty());
+        user.setEmail(email);
 
-        enterCredentials();
-        CredentialsComparing addCreds = new CredentialsComparing();
-        addCreds.saveCredentials(login + ";" + password);
+        manager.saveCredentials(enterCredentials().toString());
+        User.id = User.id ++;
 
-        user.setId(user.getId()+1);
         return false;
     }
 
-    private void enterCredentials() throws IOException {
+    private Credentials enterCredentials() throws IOException {
+
+        String login;
+        String password;
+
+        do{
         System.out.println("Enter login, please");
-        login = reader.readLine();
+        login = reader.readLine();}
+        while (login.trim().isEmpty());
+
+        do{
         System.out.println("Enter password, please");
-        password = reader.readLine();
+        password = reader.readLine();}
+        while (password.trim().isEmpty());
+
+        return new Credentials(login, password);
     }
 }

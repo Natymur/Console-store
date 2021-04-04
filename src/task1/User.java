@@ -4,14 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class User {
-    private int id = 0;
+    public static int id = 0;
     private String name, lastName, role, email;
-    private boolean userLogged = false;
-
-
-    public int getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -44,10 +38,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setId (int id) {
-        this.id = id;
     }
 
 }
