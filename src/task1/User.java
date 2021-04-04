@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class User {
-    public static int id = 0;
+    private static int id = 0;
     private String name, lastName, role, email;
 
     public String getName() {
@@ -23,6 +23,13 @@ public class User {
         return email;
     }
 
+    public static void setId(int id) {
+        User.id = id;
+    }
+
+    public static int getId() {
+        return id;
+    }
 
     public void setName(String name) {
         this.name = name;

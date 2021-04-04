@@ -51,7 +51,8 @@ public class Login {
         user.setEmail(email);
 
         manager.saveCredentials(enterCredentials().toString());
-        User.id = User.id ++;
+        User.setId(User.getId()+1);
+        System.out.println(user.getId());
 
         return false;
     }
